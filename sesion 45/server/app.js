@@ -35,3 +35,13 @@ app.use(express.static(__dirname + '/static'));
 
 /* start Service routes */
 service.setRoutes(app);
+
+
+app.get('/api/planes', (req,res) => {
+  res.json([{
+    nombrePlan: 'plan san andrés'
+  }])
+})
+
+app.post('/api/planes', (req,res) => {
+})
