@@ -1,7 +1,7 @@
 /**
  * Dependencies
  */
-// const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -11,21 +11,20 @@ const jwt = require('jsonwebtoken');
  */
 const { auth } = require('./middleware');
 const { validateUser } = require('./utils/helpers');
-const { APP_SIGN } = require('./utils/constants');
 
 /**
  * Mock DB
  */
 const { peliculas } = require('./db');
 
-
-// dotenv.config();
+dotenv.config();
 const app = express();
 
-app.listen(3000, (err) => {
+app.listen(process.env.PORT || 3000, (err) => {
   if (err) return console.error('init error', err);
   console.info('starting server at http://localhost:3000');
 });
+
 
 /**
  * MiddleWares
@@ -61,7 +60,7 @@ app.post('/api/login', (req, res) => {
     initSession: new Date()
   };
 
-  const token = jwt.sign(JSON.stringify(session), APP_SIGN);
+  const token = jwt.sign(JSON.stringify(session), process.env.API_KEY);
   res
     .status(200)
     .json({ token });
